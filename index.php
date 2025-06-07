@@ -1,6 +1,10 @@
 <?php
 require_once 'db.php';
 
+// Ambil 3 organisasi terbaru
+$orgQuery = "SELECT nama, deskripsi, foto_utama, tahun_dibangun FROM organisasi ORDER BY tahun_dibangun DESC LIMIT 3";
+$orgResult = $conn->query($orgQuery);
+
 // Ambil 3 berita terbaru
 $query = "SELECT id, judul, isi, tanggal FROM berita ORDER BY tanggal DESC LIMIT 3";
 $result = $conn->query($query);
@@ -171,6 +175,39 @@ $result = $conn->query($query);
     <?php endif; ?>
   </div>
 </div>
+
+<!-- Organisasi Sekolah -->
+<div class="container my-5">
+  <h2 class="mb-4">Organisasi Sekolah</h2>
+  <div class="row g-4">
+    <?php
+    $orgQuery = "SELECT id, nama, deskripsi, foto_utama, tahun_dibangun FROM organisasi ORDER BY tahun_dibangun DESC LIMIT 3";
+    $orgResult = $conn->query($orgQuery);
+    ?>
+
+    <?php if ($orgResult && $orgResult->num_rows > 0): ?>
+      <?php while ($org = $orgResult->fetch_assoc()): ?>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="uploads/<?= htmlspecialchars($org['foto_utama']) ?>" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Foto Organisasi">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title"><?= htmlspecialchars($org['nama']) ?></h5>
+              <p class="card-text"><?= substr(strip_tags($org['deskripsi']), 0, 100) ?>...</p>
+              <p class="text-muted small">Tahun Berdiri: <?= htmlspecialchars($org['tahun_dibangun']) ?></p>
+              <a href="organisasi_detail.php?id=<?= $org['id'] ?>" class="btn btn-primary btn-sm mt-auto">Selengkapnya</a>
+            </div>
+          </div>
+        </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <div class="col">
+        <div class="alert alert-info text-center">Belum ada data organisasi.</div>
+      </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+
 
 <!-- Footer -->
 <footer>

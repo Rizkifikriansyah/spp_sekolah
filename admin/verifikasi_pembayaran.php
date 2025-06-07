@@ -75,6 +75,9 @@ function formatTanggal($date) {
         <li class="nav-item">
           <a class="nav-link <?= isActive('kelola_berita.php') ?>" href="kelola_berita.php">Berita/Event</a>
         </li>
+                <li class="nav-item">
+          <a class="nav-link <?= isActive('kelola_organisasi.php') ?>" href="kelola_organisasi.php">Organisasi</a>
+        </li>
       </ul>
 
       <ul class="navbar-nav ms-auto">
